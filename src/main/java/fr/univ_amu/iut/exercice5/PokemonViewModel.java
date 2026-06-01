@@ -76,7 +76,7 @@ public class PokemonViewModel {
         .ifPresentOrElse(
             pokemon -> {
               if (pokemons.contains(pokemon)) {
-                statut.set("sans l'ajouter en double");
+                statut.set("sans l'ajouter en do/uble");
               } else pokemons.add(pokemon);
               recherche.set("");
               statut.set("introuvable");
