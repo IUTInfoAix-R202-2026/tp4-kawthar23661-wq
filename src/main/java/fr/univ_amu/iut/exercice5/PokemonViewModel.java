@@ -37,6 +37,8 @@ public class PokemonViewModel {
     //
     // - pokemons.setAll(service.tousLesPokemons());
     // - resume.bind(Bindings.size(pokemons).asString().concat(" Pokémon"));
+    pokemons.setAll(service.tousLesPokemons());
+    resume.bind(javafx.beans.binding.Bindings.size(pokemons).asString().concat(" Pokémon"));
   }
 
   public ObservableList<Pokemon> pokemonsProperty() {
@@ -69,5 +71,16 @@ public class PokemonViewModel {
     //    S'il est déjà présent : publier un statut (sans l'ajouter en double).
     //    S'il n'existe pas : publier un statut "introuvable".
     // Astuce : Optional offre ifPresentOrElse(present, absent).
+    service
+        .chercherParNom(recherche.get())
+        .ifPresentOrElse(
+            pokemon -> {
+              if (pokemons.contains(pokemon)) {
+                statut.set("sans l'ajouter en double");
+              } else pokemons.add(pokemon);
+              recherche.set("");
+              statut.set("introuvable");
+            },
+            () -> statut.set("Pokémon introuvable : " + recherche.get()));
   }
 }
